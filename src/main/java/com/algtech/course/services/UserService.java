@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.algtech.course.entities.User;
 import com.algtech.course.repositories.UserRepository;
+import com.algtech.course.services.exceptions.ResourceNotFoundException;
 //Registra a classe como um serviço Spring - permite as injeções de dependência automáticas
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	//Insere no DB um novo objeto do tipo User
